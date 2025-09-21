@@ -12,7 +12,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build('java-hello-inf335-unicamp:latest')
+                    sh 'docker build -t java-hello-inf335-unicamp:latest .'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    docker.image('java-hello-inf335-unicamp:latest').run()
+                    sh 'docker run java-hello-inf335-unicamp:latest'
                 }
             }
         }

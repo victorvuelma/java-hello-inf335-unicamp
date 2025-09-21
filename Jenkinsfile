@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    tools {
+        dockerTool 'docker'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/victorvuelma/java-hello-inf335-unicamp.git'
+            }
+        }
+
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    docker.image('java-hello-inf335-unicamp:latest').build('.')
+                }
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    docker.image('java-hello-inf335-unicamp:latest').run()
+                }
+            }
+        }
+
+    }
+
+    post {
+        always {
+            cleanWs()
+        }
+
+        success {
+            echo 'Pipeline executado com sucesso!'
+        }
+
+        failure {
+            echo 'O pipeline falhou. Verifique os logs.'
+        }
+    }
+}

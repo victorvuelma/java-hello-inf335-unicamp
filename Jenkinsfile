@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        dockerTool 'docker'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -16,7 +12,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.image('java-hello-inf335-unicamp:latest').build('.')
+                    docker.build('java-hello-inf335-unicamp:latest')
                 }
             }
         }
